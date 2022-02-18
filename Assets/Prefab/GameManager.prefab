@@ -43,4 +43,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 168934ce4ffe58345a19eb2c4fbb40b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  food: {fileID: 2808292118742760993, guid: 66d0a24dd630fb747a9e2652f66614fd, type: 3}
+  foodPrefab: {fileID: 2808292118742760993, guid: 66d0a24dd630fb747a9e2652f66614fd,
+    type: 3}
+  spritesFood:
+  - {fileID: 21300000, guid: d4d878ba9a539b64880784cb1cc7510f, type: 3}
+  - {fileID: 21300000, guid: d12f824922f5ef24dbb32b87c4df4fe5, type: 3}
+  - {fileID: 21300000, guid: 0e21df2a4f46b0041ae60b8e355816ea, type: 3}
+  - {fileID: 21300000, guid: 4c0963c9a4597494998837f0cacc0e54, type: 3}
+  - {fileID: 21300000, guid: 69d63ba2dc51ba7468e336e849adb125, type: 3}
+  - {fileID: 21300000, guid: 1263fceb729d4ff43ab47befa64e5a4a, type: 3}
+  - {fileID: 21300000, guid: 5d1329e86bce8d043b1e0c1d429dcaab, type: 3}

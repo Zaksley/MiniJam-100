@@ -6,9 +6,13 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
 
-    [SerializeField] private GameObject food; 
-    private Camera cam; 
+    [SerializeField] private GameObject foodPrefab; 
+    public List<Sprite> spritesFood; 
+    [SerializeField] private float timeInvokeFood = 5f;
+    [SerializeField] private float timeSpawnFood = 2f; 
 
+
+    private Camera cam; 
     private float camLeft; 
     private float camRight; 
     private float camTop; 
@@ -26,7 +30,7 @@ public class GameManager : MonoBehaviour
         camBot = bottomLeft.y + 0.5f; 
         camTop = -camBot; 
 
-        InvokeRepeating("createFood", 3, 3);
+        InvokeRepeating("createFood", timeInvokeFood, timeSpawnFood);
     }
 
     // Update is called once per frame
@@ -39,7 +43,8 @@ public class GameManager : MonoBehaviour
     {
 
         Vector3 spawnPoint = new Vector3(Random.Range(camLeft, camRight), Random.Range(camBot, camTop), 10f);
-        GameObject clone = Instantiate( food, spawnPoint, Quaternion.identity );    
+        GameObject food = Instantiate( foodPrefab, spawnPoint, Quaternion.identity );   
+        food.GetComponent<SpriteRenderer>().sprite = spritesFood[Random.Range(0, spritesFood.Count)];
 
         //Instantiate(food, new Vector2(x, y), Quaternion.identity);
     }
