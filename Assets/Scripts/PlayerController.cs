@@ -4,10 +4,12 @@ public class PlayerController : MonoBehaviour
 {
 
     public float speed = 4.5f; 
+    private Camera mainCam; 
     // Start is called before the first frame update
     void Start()
     {
-        
+        mainCam = Camera.main; 
+        Debug.Log(mainCam.pixelWidth); 
     }
 
     // Update is called once per frame
