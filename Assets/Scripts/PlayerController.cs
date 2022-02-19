@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
         transform.Translate(moveDirection * speed * Time.deltaTime);
     }
 
-    private void UpdateSpeed() 
+    public void UpdateSpeed() 
     {
         speed *= updateSpeed; 
     }

@@ -9,7 +9,7 @@ public class PlayerFoodManager : MonoBehaviour
     public float neededFood = 5f; 
     [SerializeField] private float multiplicaterFood = 2f; 
     [SerializeField] private float multiplicaterSize = 1.5f; 
-    public int foodCurrentStep = 1;  
+    
 
     [SerializeField] private GameManager manager; 
 
@@ -33,10 +33,10 @@ public class PlayerFoodManager : MonoBehaviour
     {
         // Update food 
         neededFood *= multiplicaterFood; 
-        foodCurrentStep++; 
-
         transform.localScale = transform.localScale * multiplicaterSize; 
     
-        manager.GetComponent<GameManager>().DezoomCamera(); 
+        manager.GetComponent<GameManager>().foodCurrentStep++; 
+        manager.GetComponent<GameManager>().ManagementNextStep(); 
+        
     }
 }
