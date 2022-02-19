@@ -11,6 +11,7 @@ public class PlayerFoodManager : MonoBehaviour
     [SerializeField] private float multiplicaterSize = 1.5f; 
     public int foodCurrentStep = 1;  
 
+    [SerializeField] private GameManager manager; 
 
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -20,13 +21,22 @@ public class PlayerFoodManager : MonoBehaviour
             Destroy(other.gameObject);
             currentFood++; 
 
-            if (currentFood >= neededFood) {
-                neededFood *= multiplicaterFood; 
-                foodCurrentStep++; 
-
-                transform.localScale = transform.localScale * multiplicaterSize; 
-
+            // New step 
+            if (currentFood >= neededFood)
+            {
+                NextStep(); 
             }
         }
+    }
+
+    private void NextStep() 
+    {
+        // Update food 
+        neededFood *= multiplicaterFood; 
+        foodCurrentStep++; 
+
+        transform.localScale = transform.localScale * multiplicaterSize; 
+    
+        manager.GetComponent<GameManager>().DezoomCamera(); 
     }
 }
