@@ -5,10 +5,12 @@ using UnityEngine;
 public class PlayerFoodManager : MonoBehaviour
 {
     // Food levels 
-    public float currentFood = 0f;
-    public float neededFood = 5f; 
+    public float killValueFood = 0f; 
+    public float currentFood = 5f;
+    public float neededFood = 10f; 
     [SerializeField] private float multiplicaterFood = 2f; 
     [SerializeField] private float multiplicaterSize = 1.5f; 
+    [SerializeField] private float decreaseTimer = 3.0f; 
     
 
     [SerializeField] private GameManager manager; 
@@ -19,7 +21,7 @@ public class PlayerFoodManager : MonoBehaviour
         if (other.CompareTag("Food"))   
         {
             Destroy(other.gameObject);
-            currentFood++; 
+            currentFood += other.GetComponent<FoodManager>().foodValue; 
 
             // New step 
             if (currentFood >= neededFood)
@@ -32,11 +34,20 @@ public class PlayerFoodManager : MonoBehaviour
     private void NextStep() 
     {
         // Update food 
-        neededFood *= multiplicaterFood; 
+        killValueFood = neededFood / 2; 
+        neededFood += neededFood / multiplicaterFood; 
         transform.localScale = transform.localScale * multiplicaterSize; 
     
         manager.GetComponent<GameManager>().foodCurrentStep++; 
         manager.GetComponent<GameManager>().ManagementNextStep(); 
-        
+    }
+
+    public IEnumerator DecreaseFood()
+    {   
+        while(true)
+        {
+            yield return new WaitForSeconds(decreaseTimer); 
+            currentFood--; 
+        }
     }
 }

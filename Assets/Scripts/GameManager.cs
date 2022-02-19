@@ -1,13 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI; 
 
 public class GameManager : MonoBehaviour
 {
 
     [SerializeField] private GameObject foodPrefab; 
     [SerializeField] private GameObject player;
+    [SerializeField] private Slider slider;
+
     public List<Sprite> spritesFood; 
     // [SerializeField] private float timeInvokeFood = 5f;
     [SerializeField] private float timeSpawnFood = 2f; 
@@ -32,12 +34,15 @@ public class GameManager : MonoBehaviour
     private float nextSizeCam; 
     private bool needUpdateCam; 
     [SerializeField] private float multiplicaterCamSize = 1.5f; 
-    [SerializeField] private float multiplicaterSpeedTime = 1f; 
+    [SerializeField] private float multiplicaterCamSpeedTime = 1.5f; 
 
 
     // Start is called before the first frame update
     void Start()
     {
+        slider.minValue = player.GetComponent<PlayerFoodManager>().killValueFood; 
+        slider.maxValue = player.GetComponent<PlayerFoodManager>().neededFood; 
+
         cam = Camera.main; 
         currentSizeCam = cam.orthographicSize; 
         nextSizeCam = currentSizeCam; 
@@ -50,14 +55,17 @@ public class GameManager : MonoBehaviour
         //InvokeRepeating("createFood", timeInvokeFood, timeSpawnFood);
 
         StartCoroutine(spawnFood(initEndStage, initValueFood, initSizeFood)); 
+        StartCoroutine(spawnFood(initEndStage, initValueFood, initSizeFood)); 
+        StartCoroutine(player.GetComponent<PlayerFoodManager>().DecreaseFood());
     }
 
     // Update is called once per frame
     void Update()
     {
+
         if (currentSizeCam < nextSizeCam)
         {
-            currentSizeCam += Time.deltaTime * multiplicaterSpeedTime; 
+            currentSizeCam += Time.deltaTime * multiplicaterCamSpeedTime; 
             cam.orthographicSize = currentSizeCam; 
             UpdateCamera(); 
         }
@@ -68,6 +76,9 @@ public class GameManager : MonoBehaviour
                 UpdateCamera(); 
             }
         }
+
+        // Slider food 
+        slider.value = player.GetComponent<PlayerFoodManager>().currentFood; 
     }
 
     public void UpdateCamera() 
@@ -91,13 +102,19 @@ public class GameManager : MonoBehaviour
             var stopStage = foodCurrentStep + foodRateChange; 
             var value = Mathf.Pow(2, (foodCurrentStep / foodRateChange)); 
             var size = initValueFood * (foodCurrentStep / foodRateChange);
-            Debug.Log("stage:" + stopStage); 
-            Debug.Log("value:" + value); 
-            Debug.Log("size:" + size); 
-
             StartCoroutine(spawnFood(stopStage, value, size));
         }
 
+        else if (foodCurrentStep % foodRateChange == 1)
+        {
+            var stopStage = foodCurrentStep + foodRateChange + 1; 
+            var value = Mathf.Pow(2, (foodCurrentStep / foodRateChange)); 
+            var size = initValueFood * (foodCurrentStep / foodRateChange);
+            StartCoroutine(spawnFood(stopStage, value, size));
+        }
+
+        slider.minValue = player.GetComponent<PlayerFoodManager>().killValueFood; 
+        slider.maxValue = player.GetComponent<PlayerFoodManager>().neededFood; 
 
         StartCoroutine(spawnFood(initEndStage, initValueFood, initSizeFood)); 
         player.GetComponent<PlayerController>().UpdateSpeed(); 
