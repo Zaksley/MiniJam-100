@@ -1,7 +1,16 @@
 ﻿using UnityEngine;
+using System.Collections; 
+using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour
 {
+
+    public string top = "z"; 
+    public string bot = "s"; 
+    public string right = "d"; 
+    public string left = "q"; 
+    private string[] alphabet = new string[] {"a", "z", "e", "r", "t", "y", "u", "i", "o", "p", "q", "s", "d", "f", "g", "h", "j", "k", "l", "m", "w", "x", "c", "v", "b", "n"}; 
+    private List<string> currentAlphabet; 
 
     public float speed = 4.5f; 
     [SerializeField] private float updateSpeed = 1.2f;
@@ -10,6 +19,11 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         mainCam = Camera.main; 
+
+        top = "z"; 
+        bot = "s"; 
+        right = "d"; 
+        left = "q"; 
     }
 
     // Update is called once per frame
@@ -17,14 +31,11 @@ public class PlayerController : MonoBehaviour
     {
             // Movement Input 
         Vector2 moveDirection = Vector2.zero; 
-        var vertical = Input.GetAxisRaw("Vertical"); 
-        var horizontal = Input.GetAxisRaw("Horizontal"); 
 
-        if (horizontal > 0) moveDirection.x += 1; 
-        if (horizontal < 0) moveDirection.x += -1; 
-
-        if (vertical > 0) moveDirection.y += 1; 
-        if (vertical < 0) moveDirection.y += -1; 
+        if (Input.GetKey(right)) moveDirection.x += 1; 
+        if (Input.GetKey(left)) moveDirection.x += -1; 
+        if (Input.GetKey(top)) moveDirection.y += 1; 
+        if (Input.GetKey(bot)) moveDirection.y += -1; 
 
         moveDirection = moveDirection.normalized; 
         transform.Translate(moveDirection * speed * Time.deltaTime);
@@ -33,5 +44,29 @@ public class PlayerController : MonoBehaviour
     public void UpdateSpeed() 
     {
         speed *= updateSpeed; 
+    }
+
+    public void ShuffleKeys()
+    {
+        currentAlphabet = new List<string>(alphabet); 
+
+        top = SelectKickLetter(currentAlphabet); 
+        bot = SelectKickLetter(currentAlphabet); 
+        right = SelectKickLetter(currentAlphabet); 
+        left = SelectKickLetter(currentAlphabet);
+
+        Debug.Log("top:" + top); 
+        Debug.Log("bot:" + bot); 
+        Debug.Log("right:" + right); 
+        Debug.Log("left:" + left); 
+
+    }
+
+    private string SelectKickLetter(List<string> curentAlphabet)
+    {
+        var index = Random.Range(0, currentAlphabet.Count); 
+        var choosed = currentAlphabet[index]; 
+        currentAlphabet.RemoveAt(index);
+        return choosed; 
     }
 }
