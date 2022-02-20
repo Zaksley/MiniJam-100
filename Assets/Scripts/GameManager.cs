@@ -97,13 +97,13 @@ public class GameManager : MonoBehaviour
 
         // Slider food 
         slider.value = player.GetComponent<PlayerFoodManager>().currentFood; 
-        Score.text = "Score : " + foodCurrentStep; 
+        Score.text = foodCurrentStep.ToString(); 
 
         // Display keys
-        top.text = "Top : " + player.GetComponent<PlayerController>().top.ToUpper(); 
-        bot.text = "Bottom : " + player.GetComponent<PlayerController>().bot.ToUpper(); 
-        right.text = "Right : " + player.GetComponent<PlayerController>().right.ToUpper(); 
-        left.text = "Left : " + player.GetComponent<PlayerController>().left.ToUpper(); 
+        top.text = player.GetComponent<PlayerController>().top.ToUpper(); 
+        bot.text = player.GetComponent<PlayerController>().bot.ToUpper(); 
+        right.text = player.GetComponent<PlayerController>().right.ToUpper(); 
+        left.text = player.GetComponent<PlayerController>().left.ToUpper(); 
     }
 
     public void UpdateCamera() 

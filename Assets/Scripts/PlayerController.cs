@@ -4,12 +4,18 @@ using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour
 {
+    // Keys 
     public string top = "z"; 
     public string bot = "s"; 
     public string right = "d"; 
     public string left = "q"; 
     private string[] alphabet = new string[] {"a", "z", "e", "r", "t", "y", "u", "i", "o", "p", "q", "s", "d", "f", "g", "h", "j", "k", "l", "m", "w", "x", "c", "v", "b", "n"}; 
     private List<string> currentAlphabet; 
+
+    // Anims 
+    private Animator anim; 
+    [SerializeField] private float doAnimation = 3.0f; 
+    private string[] animations = new string[] {"Wink", "Gaze1", "Gaze2", "Eat"}; 
 
     public float speed = 4.5f; 
     [SerializeField] private float updateSpeed = 1.2f;
@@ -18,6 +24,8 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         mainCam = Camera.main; 
+        anim = GetComponent<Animator>(); 
+        InvokeRepeating("ChooseAnim", doAnimation, doAnimation); 
 
         top = "z"; 
         bot = "s"; 
@@ -61,5 +69,11 @@ public class PlayerController : MonoBehaviour
         var choosed = currentAlphabet[index]; 
         currentAlphabet.RemoveAt(index);
         return choosed; 
+    }
+
+    private void ChooseAnim() 
+    {
+        string animToPlay = animations[Random.Range(0, animations.Length)];
+        anim.Play(animToPlay); 
     }
 }
