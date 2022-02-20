@@ -28,10 +28,10 @@ public class GameManager : MonoBehaviour
 
     // Camera variables
     private Camera cam; 
-    private float camLeft; 
-    private float camRight; 
-    private float camTop; 
-    private float camBot; 
+    public float camLeft; 
+    public float camRight; 
+    public float camTop; 
+    public float camBot; 
     private float currentSizeCam; 
     private float nextSizeCam; 
     private bool needUpdateCam; 
@@ -72,11 +72,6 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-
-
-
-
         if (currentSizeCam < nextSizeCam)
         {
             currentSizeCam += Time.deltaTime * multiplicaterCamSpeedTime; 
@@ -110,10 +105,25 @@ public class GameManager : MonoBehaviour
     {
         Vector3 bottomLeft = cam.ViewportToWorldPoint(new Vector3(0, 0, 10f));
 
-        camLeft = bottomLeft.x + 0.5f;
+        float offsetYBot = 0.5f; 
+        float offsetYTop = -1.5f;
+        float offsetX = 1.0f; 
+
+        camLeft = bottomLeft.x + offsetX;
         camRight = -camLeft;
-        camBot = bottomLeft.y + 0.5f; 
-        camTop = -camBot; 
+        camBot = bottomLeft.y + offsetYBot; 
+        camTop = -bottomLeft.y + offsetYTop; 
+
+        player.GetComponent<PlayerController>().maxRight = -bottomLeft.x;
+        player.GetComponent<PlayerController>().maxLeft = bottomLeft.x; 
+        player.GetComponent<PlayerController>().maxTop = -bottomLeft.y; 
+        player.GetComponent<PlayerController>().maxBot = bottomLeft.y; 
+
+        /* Debug Cam
+        Debug.Log("Left" + player.GetComponent<PlayerController>().maxLeft);
+        Debug.Log("Right" + player.GetComponent<PlayerController>().maxRight);
+        Debug.Log("Top" + player.GetComponent<PlayerController>().maxTop);
+        Debug.Log("Bot" + player.GetComponent<PlayerController>().maxBot); */
     }
 
     public void ManagementNextStep()
@@ -159,8 +169,10 @@ public class GameManager : MonoBehaviour
 
     private void createFood(float valueFood, float sizeFood) 
     {
+        float x = Random.Range(camLeft, camRight); 
+        float y = Random.Range(camBot, camTop); 
 
-        Vector3 spawnPoint = new Vector3(Random.Range(camLeft, camRight), Random.Range(camBot, camTop), 10f);
+        Vector3 spawnPoint = new Vector3(x, y, 10f);
         GameObject food = Instantiate( foodPrefab, spawnPoint, Quaternion.identity );   
         food.GetComponent<SpriteRenderer>().sprite = spritesFood[Random.Range(0, spritesFood.Count)];
         food.GetComponent<FoodManager>().foodValue = valueFood; 

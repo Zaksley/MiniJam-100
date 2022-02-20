@@ -4,6 +4,12 @@ using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour
 {
+
+    public float maxRight = 0.0f; 
+    public float maxLeft = 0.0f;
+    public float maxTop = 0.0f;
+    public float maxBot = 0.0f;
+
     // Keys 
     public string top = "z"; 
     public string bot = "s"; 
@@ -44,8 +50,13 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(top)) moveDirection.y += 1; 
         if (Input.GetKey(bot)) moveDirection.y += -1; 
 
-        moveDirection = moveDirection.normalized; 
+        // Movement 
+        if (transform.position.x + moveDirection.x > maxRight || transform.position.x + moveDirection.x < maxLeft) moveDirection.x = 0;
+        if (transform.position.y + moveDirection.y > maxTop || transform.position.y + moveDirection.y < maxBot) moveDirection.y = 0;
+
+        moveDirection = moveDirection.normalized;
         transform.Translate(moveDirection * speed * Time.deltaTime);
+
     }
 
     public void UpdateSpeed() 

@@ -121,6 +121,7 @@ MonoBehaviour:
   bot: 
   right: 
   left: 
+  doAnimation: 3
   speed: 4.5
   updateSpeed: 1.2
 --- !u!58 &9205604150904958731
@@ -178,5 +179,5 @@ MonoBehaviour:
   multiplicaterFood: 2
   multiplicaterSize: 1.4
   decreaseTimer: 1
-  timeDecreaseToZero: 25
+  timeDecreaseToZero: 20
   manager: {fileID: 0}
