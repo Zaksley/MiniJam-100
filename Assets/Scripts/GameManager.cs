@@ -129,33 +129,28 @@ public class GameManager : MonoBehaviour
 
     public void ManagementNextStep()
     {
-        if (foodCurrentStep >= 16)  SceneManager.LoadScene("Win"); 
-
+        if (foodCurrentStep >= 15)  
+        {
+            SceneManager.LoadScene("Win"); 
+            return;
+        }
+        
         DezoomCamera(); 
-        //InvokeRepeating("createFood", timeSpawnFood, timeSpawnFood); 
-            // Update food 
 
-        float multByLevel = 1.6f; 
+        float divByLevel = foodCurrentStep / foodRateChange + 1;
+        float value = initValueFood * Mathf.Pow(1.3f, foodCurrentStep); 
 
         if (foodCurrentStep % foodRateChange == 0)
         {
             var stopStage = foodCurrentStep + foodRateChange; 
-            float value = initSizeFood * 5 * multByLevel * (foodCurrentStep / foodRateChange);
             actualFoodSize *= 2;
-            
-            if (foodCurrentStep == 15){
-                value *= 2;
-            }
 
-            if (foodCurrentStep >= 10) StartCoroutine(spawnFood(stopStage, value, actualFoodSize));
             StartCoroutine(spawnFood(stopStage, value, actualFoodSize));
         }
 
         else if (foodCurrentStep % foodRateChange == 1)
         {
             var stopStage = foodCurrentStep + foodRateChange + 1; 
-            float value = initSizeFood * 5 * multByLevel * multByLevel * (foodCurrentStep / foodRateChange);
-
             var size = actualFoodSize + actualFoodSize * 2 / 3;
             StartCoroutine(spawnFood(stopStage, value, size));
         }
@@ -163,7 +158,6 @@ public class GameManager : MonoBehaviour
         else if (foodCurrentStep % foodRateChange == 2)
         {
             var stopStage = foodCurrentStep + foodRateChange + 2; 
-            float value = initSizeFood * 5 * multByLevel * multByLevel * multByLevel * (foodCurrentStep / foodRateChange);
             var size = actualFoodSize + actualFoodSize * 4 / 3;
             StartCoroutine(spawnFood(stopStage, value, size));
         }
