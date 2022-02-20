@@ -561,11 +561,11 @@ PlayerSettings:
   m_MobileRenderingPath: 1
   metroPackageName: Template_2D
   metroPackageVersion: 
-  metroCertificatePath: 
+  metroCertificatePath: D:\Unity\MiniJam100\Assets\WSATestCertificate.pfx
   metroCertificatePassword: 
-  metroCertificateSubject: 
-  metroCertificateIssuer: 
-  metroCertificateNotAfter: 0000000000000000
+  metroCertificateSubject: DefaultCompany
+  metroCertificateIssuer: DefaultCompany
+  metroCertificateNotAfter: 006224a67645d901
   metroApplicationDescription: Template_2D
   wsaImages: {}
   metroTileShortName: 

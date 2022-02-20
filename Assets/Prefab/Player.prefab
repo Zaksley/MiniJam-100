@@ -117,6 +117,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7900ecd92c8241740b42a1a10091d9d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxRight: 0
+  maxLeft: 0
+  maxTop: 0
+  maxBot: 0
   top: 
   bot: 
   right: 
@@ -174,10 +178,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   killValueFood: 0
+  closeKillValueFood: 2
   currentFood: 5
   neededFood: 10
   multiplicaterFood: 2
   multiplicaterSize: 1.4
   decreaseTimer: 1
-  timeDecreaseToZero: 20
+  timeDecreaseToZero: 15
   manager: {fileID: 0}

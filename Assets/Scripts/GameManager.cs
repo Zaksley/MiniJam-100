@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI; 
+using UnityEngine.SceneManagement; 
 
 public class GameManager : MonoBehaviour
 {
@@ -128,30 +129,43 @@ public class GameManager : MonoBehaviour
 
     public void ManagementNextStep()
     {
+        if (foodCurrentStep >= 16)  SceneManager.LoadScene("Win"); 
+
         DezoomCamera(); 
         //InvokeRepeating("createFood", timeSpawnFood, timeSpawnFood); 
             // Update food 
+
+        float multByLevel = 1.6f; 
+
         if (foodCurrentStep % foodRateChange == 0)
         {
             var stopStage = foodCurrentStep + foodRateChange; 
-            var value = initSizeFood * 5 * (foodCurrentStep / foodRateChange);
-            actualFoodSize *= 2; 
+            float value = initSizeFood * 5 * multByLevel * (foodCurrentStep / foodRateChange);
+            actualFoodSize *= 2;
+            
+            if (foodCurrentStep == 15){
+                value *= 2;
+            }
 
+            if (foodCurrentStep >= 10) StartCoroutine(spawnFood(stopStage, value, actualFoodSize));
             StartCoroutine(spawnFood(stopStage, value, actualFoodSize));
         }
 
         else if (foodCurrentStep % foodRateChange == 1)
         {
             var stopStage = foodCurrentStep + foodRateChange + 1; 
-            var value = initSizeFood * 5 * 1.5f * (foodCurrentStep / foodRateChange);
-            StartCoroutine(spawnFood(stopStage, value, actualFoodSize));
+            float value = initSizeFood * 5 * multByLevel * multByLevel * (foodCurrentStep / foodRateChange);
+
+            var size = actualFoodSize + actualFoodSize * 2 / 3;
+            StartCoroutine(spawnFood(stopStage, value, size));
         }
 
         else if (foodCurrentStep % foodRateChange == 2)
         {
             var stopStage = foodCurrentStep + foodRateChange + 2; 
-            var value = initSizeFood * 5 * 3.0f * (foodCurrentStep / foodRateChange);
-            StartCoroutine(spawnFood(stopStage, value, actualFoodSize));
+            float value = initSizeFood * 5 * multByLevel * multByLevel * multByLevel * (foodCurrentStep / foodRateChange);
+            var size = actualFoodSize + actualFoodSize * 4 / 3;
+            StartCoroutine(spawnFood(stopStage, value, size));
         }
 
         slider.minValue = player.GetComponent<PlayerFoodManager>().killValueFood; 

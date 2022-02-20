@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
     // Anims 
     private Animator anim; 
     [SerializeField] private float doAnimation = 3.0f; 
-    private string[] animations = new string[] {"Wink", "Gaze1", "Gaze2", "Eat"}; 
+    private string[] animations = new string[] {"Wink", "Gaze1", "Gaze2", "Eat", "Hungry"}; 
 
     public float speed = 4.5f; 
     [SerializeField] private float updateSpeed = 1.2f;
