@@ -378,25 +378,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 9205604151963839840}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1093091949
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1093091943}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e5c3780043aa9a4fa32e3187577da26, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  killValueFood: 0
-  currentFood: 5
-  neededFood: 10
-  multiplicaterFood: 2
-  multiplicaterSize: 1.4
-  decreaseTimer: 2
-  manager: {fileID: 119516850}
 --- !u!1 &1139938864
 GameObject:
   m_ObjectHideFlags: 0
@@ -901,12 +882,12 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
+    m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 0
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -1189,6 +1170,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6647435867611985504, guid: 9636134b2d103234ab7d8253427f8eb6,
+        type: 3}
+      propertyPath: manager
+      value: 
+      objectReference: {fileID: 119516850}
     - target: {fileID: 9205604150904958727, guid: 9636134b2d103234ab7d8253427f8eb6,
         type: 3}
       propertyPath: m_Name

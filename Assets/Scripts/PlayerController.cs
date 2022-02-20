@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour
 {
-
     public string top = "z"; 
     public string bot = "s"; 
     public string right = "d"; 
@@ -54,12 +53,6 @@ public class PlayerController : MonoBehaviour
         bot = SelectKickLetter(currentAlphabet); 
         right = SelectKickLetter(currentAlphabet); 
         left = SelectKickLetter(currentAlphabet);
-
-        Debug.Log("top:" + top); 
-        Debug.Log("bot:" + bot); 
-        Debug.Log("right:" + right); 
-        Debug.Log("left:" + left); 
-
     }
 
     private string SelectKickLetter(List<string> curentAlphabet)

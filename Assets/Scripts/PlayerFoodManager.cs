@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement; 
 
 public class PlayerFoodManager : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class PlayerFoodManager : MonoBehaviour
     [SerializeField] private float multiplicaterFood = 2f; 
     [SerializeField] private float multiplicaterSize = 1.5f; 
     [SerializeField] private float decreaseTimer = 3.0f; 
-    
+    [SerializeField] private float timeDecreaseToZero = 20f; 
 
     [SerializeField] private GameManager manager; 
 
@@ -47,7 +48,16 @@ public class PlayerFoodManager : MonoBehaviour
         while(true)
         {
             yield return new WaitForSeconds(decreaseTimer); 
-            currentFood--; 
+            float middleFood = (neededFood - killValueFood) / 2; 
+            float decreaseValue = middleFood / timeDecreaseToZero; 
+            currentFood -= decreaseValue;  
+
+                // Kill 
+            if (currentFood <= killValueFood) 
+            {
+                SceneManager.LoadScene("Game"); 
+            }
+
         }
     }
 }

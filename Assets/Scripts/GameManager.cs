@@ -66,7 +66,6 @@ public class GameManager : MonoBehaviour
 
         StartCoroutine(spawnFood(initEndStage, initValueFood, initSizeFood)); 
         StartCoroutine(spawnFood(initEndStage, initValueFood, initSizeFood)); 
-        StartCoroutine(spawnFood(initEndStage, initValueFood, initSizeFood)); 
         StartCoroutine(player.GetComponent<PlayerFoodManager>().DecreaseFood());
     }
 
@@ -125,18 +124,23 @@ public class GameManager : MonoBehaviour
         if (foodCurrentStep % foodRateChange == 0)
         {
             var stopStage = foodCurrentStep + foodRateChange; 
-            var value = Mathf.Pow(2, (foodCurrentStep / foodRateChange)); 
-            actualFoodSize += initSizeFood; 
+            var value = initSizeFood * 5 * (foodCurrentStep / foodRateChange);
+            actualFoodSize *= 2; 
 
-            StartCoroutine(spawnFood(stopStage, value, actualFoodSize));
             StartCoroutine(spawnFood(stopStage, value, actualFoodSize));
         }
 
         else if (foodCurrentStep % foodRateChange == 1)
         {
             var stopStage = foodCurrentStep + foodRateChange + 1; 
-            var value = Mathf.Pow(2, (foodCurrentStep / foodRateChange)); 
+            var value = initSizeFood * 5 * 1.5f * (foodCurrentStep / foodRateChange);
             StartCoroutine(spawnFood(stopStage, value, actualFoodSize));
+        }
+
+        else if (foodCurrentStep % foodRateChange == 2)
+        {
+            var stopStage = foodCurrentStep + foodRateChange + 2; 
+            var value = initSizeFood * 5 * 3.0f * (foodCurrentStep / foodRateChange);
             StartCoroutine(spawnFood(stopStage, value, actualFoodSize));
         }
 
@@ -145,7 +149,6 @@ public class GameManager : MonoBehaviour
 
         player.GetComponent<PlayerController>().UpdateSpeed();
         player.GetComponent<PlayerController>().ShuffleKeys(); 
-        //StartCoroutine(player.GetComponent<PlayerFoodManager>().DecreaseFood());
     }
 
     private void DezoomCamera() 
@@ -161,13 +164,7 @@ public class GameManager : MonoBehaviour
         GameObject food = Instantiate( foodPrefab, spawnPoint, Quaternion.identity );   
         food.GetComponent<SpriteRenderer>().sprite = spritesFood[Random.Range(0, spritesFood.Count)];
         food.GetComponent<FoodManager>().foodValue = valueFood; 
-        food.transform.localScale = new Vector3(sizeFood, sizeFood, 10f); 
-        //new Vector3(sizeFood, sizeFood, sizeFood);
-        
-        /*
-        FoodManager foodScript = food.GetComponent<FoodManager>(); 
-        foodScript.foodValue = valueFood; */
-        
+        food.transform.localScale = new Vector3(sizeFood, sizeFood, 10f);         
     }
 
     private IEnumerator spawnFood(float stopStage, float valueFood, float sizeFood)
