@@ -6,16 +6,14 @@ using UnityEngine.UI;
 
 public class PlayerFoodManager : MonoBehaviour
 {
+    public AudioSource eatSound; 
+
     // Food levels 
     public float killValueFood = 0f; 
     public float closeKillValueFood = 2f; 
     public float currentFood = 5f;
     public float neededFood = 10f; 
     private Color red = new Color(179f/255, 61f/255, 61f/255); 
-
-    /*
-    [SerializeField] private Slider slider;
-    private ColorBlock cb; */
 
     [SerializeField] private float multiplicaterFood = 2f; 
     [SerializeField] private float multiplicaterSize = 1.5f; 
@@ -34,6 +32,7 @@ public class PlayerFoodManager : MonoBehaviour
         {
             Destroy(other.gameObject);
             currentFood += other.GetComponent<FoodManager>().foodValue; 
+            eatSound.Play(); 
 
             // New step 
             if (currentFood >= neededFood)

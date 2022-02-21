@@ -11,10 +11,10 @@ public class PlayerController : MonoBehaviour
     public float maxBot = 0.0f;
 
     // Keys 
-    public string top = "z"; 
+    public string top = "w"; 
     public string bot = "s"; 
     public string right = "d"; 
-    public string left = "q"; 
+    public string left = "a"; 
     private string[] alphabet = new string[] {"a", "z", "e", "r", "t", "y", "u", "i", "o", "p", "q", "s", "d", "f", "g", "h", "j", "k", "l", "m", "w", "x", "c", "v", "b", "n"}; 
     private List<string> currentAlphabet; 
 

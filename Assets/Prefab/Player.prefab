@@ -184,5 +184,5 @@ MonoBehaviour:
   multiplicaterFood: 2
   multiplicaterSize: 1.4
   decreaseTimer: 1
-  timeDecreaseToZero: 15
+  timeDecreaseToZero: 12.5
   manager: {fileID: 0}

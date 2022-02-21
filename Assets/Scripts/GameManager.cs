@@ -44,6 +44,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Text bot; 
     [SerializeField] private Text right; 
     [SerializeField] private Text left; 
+    [SerializeField] private Text Chaos;
 
     // Start is called before the first frame update
     void Start()
@@ -57,17 +58,19 @@ public class GameManager : MonoBehaviour
         nextSizeCam = currentSizeCam; 
         needUpdateCam = false; 
         UpdateCamera(); 
-    
+
+        Chaos.rectTransform.localScale = Vector3.zero;
+
+        // Food Spawn 
         for(var ifood = 0; ifood < numberFood; ifood++)
             createFood(initValueFood, initSizeFood);
 
         actualFoodSize = initSizeFood; 
-
-        //InvokeRepeating("createFood", timeInvokeFood, timeSpawnFood);
-
         StartCoroutine(spawnFood(initEndStage, initValueFood, initSizeFood)); 
         StartCoroutine(spawnFood(initEndStage, initValueFood, initSizeFood)); 
         StartCoroutine(player.GetComponent<PlayerFoodManager>().DecreaseFood());
+
+        
     }
 
     // Update is called once per frame
@@ -93,13 +96,9 @@ public class GameManager : MonoBehaviour
 
         // Slider food 
         slider.value = player.GetComponent<PlayerFoodManager>().currentFood; 
-        Score.text = foodCurrentStep.ToString(); 
 
-        // Display keys
-        top.text = player.GetComponent<PlayerController>().top.ToUpper(); 
-        bot.text = player.GetComponent<PlayerController>().bot.ToUpper(); 
-        right.text = player.GetComponent<PlayerController>().right.ToUpper(); 
-        left.text = player.GetComponent<PlayerController>().left.ToUpper(); 
+        if (Chaos.rectTransform.localScale.x >= 0)
+            Chaos.rectTransform.localScale -= new Vector3(1f, 1f, 1f) * Time.deltaTime;
     }
 
     public void UpdateCamera() 
@@ -125,6 +124,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Right" + player.GetComponent<PlayerController>().maxRight);
         Debug.Log("Top" + player.GetComponent<PlayerController>().maxTop);
         Debug.Log("Bot" + player.GetComponent<PlayerController>().maxBot); */
+
     }
 
     public void ManagementNextStep()
@@ -134,9 +134,11 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene("Win"); 
             return;
         }
-        
+
         DezoomCamera(); 
 
+
+        // Food Spawn 
         float divByLevel = foodCurrentStep / foodRateChange + 1;
         float value = initValueFood * Mathf.Pow(1.3f, foodCurrentStep); 
 
@@ -159,14 +161,28 @@ public class GameManager : MonoBehaviour
         {
             var stopStage = foodCurrentStep + foodRateChange + 2; 
             var size = actualFoodSize + actualFoodSize * 4 / 3;
-            StartCoroutine(spawnFood(stopStage, value, size));
+            StartCoroutine(spawnFood(stopStage, value, size));      
+
+            if (foodCurrentStep == 14)
+                StartCoroutine(spawnFood(stopStage, value, size));      
         }
 
+        // Sliders 
         slider.minValue = player.GetComponent<PlayerFoodManager>().killValueFood; 
         slider.maxValue = player.GetComponent<PlayerFoodManager>().neededFood; 
 
+        // Player Updates 
         player.GetComponent<PlayerController>().UpdateSpeed();
         player.GetComponent<PlayerController>().ShuffleKeys(); 
+
+        // Display keys
+        top.text = player.GetComponent<PlayerController>().top.ToUpper(); 
+        bot.text = player.GetComponent<PlayerController>().bot.ToUpper(); 
+        right.text = player.GetComponent<PlayerController>().right.ToUpper(); 
+        left.text = player.GetComponent<PlayerController>().left.ToUpper(); 
+        Score.text = foodCurrentStep.ToString(); 
+
+        Chaos.rectTransform.localScale = new Vector3(1, 1, 0); 
     }
 
     private void DezoomCamera() 
