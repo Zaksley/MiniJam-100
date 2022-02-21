@@ -33,10 +33,10 @@ public class PlayerController : MonoBehaviour
         anim = GetComponent<Animator>(); 
         InvokeRepeating("ChooseAnim", doAnimation, doAnimation); 
 
-        top = "z"; 
+        top = "w"; 
         bot = "s"; 
         right = "d"; 
-        left = "q"; 
+        left = "a"; 
     }
 
     // Update is called once per frame
